@@ -1,0 +1,15 @@
+apiVersion: skaffold/v1alpha5
+kind: Config
+build:
+  artifacts:
+    - image: example/customer
+      # uncomment this to runn the Docker file in the context dir
+      # context: ./
+      # run a maven build and then use that container to deploy
+      jibMaven:
+        module: ""
+        profile: ""
+  local:
+    push: false
+deploy:
+  kustomize: {}

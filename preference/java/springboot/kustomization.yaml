@@ -1,0 +1,5 @@
+resources:
+  - "../../kubernetes/Deployment.yml"
+  - "../../kubernetes/Service.yml"
+patches:
+  - "../../kubernetes/istio-sidecar.yaml"

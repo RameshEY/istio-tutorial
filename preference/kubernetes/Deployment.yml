@@ -18,37 +18,18 @@ spec:
         version: v1
     spec:
       containers:
-      - env:
-        - name: JAVA_OPTIONS
-          value: -Xms128m -Xmx256m -Djava.net.preferIPv4Stack=true -Djava.security.egd=file:///dev/./urandom
-        image: example/preference:v1
-        imagePullPolicy: IfNotPresent
-        livenessProbe:
-          exec:
-            command:
-            - curl
-            - localhost:8080/health
-          initialDelaySeconds: 30
-          periodSeconds: 5
-          timeoutSeconds: 1
-        name: preference
-        ports:
-        - containerPort: 8080
-          name: http
-          protocol: TCP
-        - containerPort: 8778
-          name: jolokia
-          protocol: TCP
-        - containerPort: 9779
-          name: prometheus
-          protocol: TCP
-        readinessProbe:
-          exec:
-            command:
-            - curl
-            - localhost:8080/health
-          initialDelaySeconds: 30
-          periodSeconds: 5
-          timeoutSeconds: 1
-        securityContext:
-          privileged: false
+        - name: preference
+          image: example/preference:v1
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8080
+              name: http
+              protocol: TCP
+            - containerPort: 8778
+              name: jolokia
+              protocol: TCP
+            - containerPort: 9779
+              name: prometheus
+              protocol: TCP
+          securityContext:
+            privileged: false
