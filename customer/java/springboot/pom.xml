@@ -69,6 +69,7 @@
                 <artifactId>jib-maven-plugin</artifactId>
                 <version>0.9.11</version>
                 <configuration>
+                    <allowInsecureRegistries>true</allowInsecureRegistries>
                     <from>
                         <image>gcr.io/distroless/java@sha256:2384d64568cb82f34b0677a84c695d068c51a29fcd85cebe6ac1c0e4d271409d</image>
                     </from>

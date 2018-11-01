@@ -1,0 +1,8 @@
+resources:
+  - "../../../kubernetes/Deployment.yml"
+namePrefix: v2-
+commonLabels:
+  app: preference
+  version: v2
+patches:
+  - "../../../kubernetes/istio-sidecar.yaml"

@@ -1,7 +1,7 @@
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: preference
+  name: recommendation
 spec:
   template:
     spec:
@@ -14,7 +14,7 @@ spec:
             - --binaryPath
             - /usr/local/bin/envoy
             - --serviceCluster
-            - preference
+            - recommendation
             - --drainDuration
             - 45s
             - --parentShutdownDuration

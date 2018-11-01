@@ -3,23 +3,20 @@ kind: Deployment
 metadata:
   labels:
     app: preference
-    version: v1
-  name: preference-v1
+  name: preference
 spec:
   replicas: 1
   selector:
     matchLabels:
       app: preference
-      version: v1
   template:
     metadata:
       labels:
         app: preference
-        version: v1
     spec:
       containers:
         - name: preference
-          image: example/preference:v1
+          image: example/preference
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 8080

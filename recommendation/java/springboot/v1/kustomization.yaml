@@ -1,0 +1,9 @@
+resources:
+  - "../../../kubernetes/Deployment.yml"
+
+namePrefix: "v1-"
+
+commonLabels:
+  version: v1
+patches:
+  - "../../../kubernetes/istio-sidecar.yaml"
