@@ -169,6 +169,7 @@ endif::workshop[]
 ifdef::workshop[]
 First, introduce some wait time in `recommendation v2` by making it a slow performer with a 3 second delay by running the command
 
+ifndef::workshop[]
 [tabs]
 ====
 kubectl::
@@ -185,6 +186,7 @@ copyToClipboard::cb-timeout-patch-deployment[]
 oc::
 +
 --
+endif::[]
 [#cb-timeout-oc-patch-deployment]
 [source,bash,subs="+macros,+attributes"]
 ----
@@ -192,8 +194,10 @@ oc patch deployment -n tutorial{namespace-suffix} recommendation-v2 \
  -p '{"spec":{"template":{"spec":{"containers":[{"name":"recommendation", "image":"quay.io/rhdevelopers/istio-tutorial-recommendation:v2-timeout"}]}}}}' 
 ----
 copyToClipboard::cb-timeout-oc-patch-deployment[]
+ifndef::workshop[]
 --
 ====
+endif::[]
 
 endif::workshop[]
 
@@ -295,31 +299,12 @@ endif::workshop[]
 
 ifdef::workshop[]
 Change the implementation of `v2` back to the image that responds without the delay of 3 seconds:
-
-[tabs]
-====
-kubectl::
-+
---
-[#cb-timeout-undo-patch]
-[source,bash,subs="+macros,+attributes"]
-----
-kubectl patch deployment -n tutorial{namespace-suffix} recommendation-v2 -p '{"spec":{"template":{"spec":{"containers":[{"name":"recommendation", "image":"quay.io/rhdevelopers/istio-tutorial-recommendation:v2"}]}}}}'
-----
-copyToClipboard::cb-timeout-undo-patch[]
---
-oc::
-+
---
 [#cb-timeout-oc-undo-patch]
 [source,bash,subs="+macros,+attributes"]
 ----
 oc patch deployment  -n tutorial{namespace-suffix} recommendation-v2 -p '{"spec":{"template":{"spec":{"containers":[{"name":"recommendation", "image":"quay.io/rhdevelopers/istio-tutorial-recommendation:v2"}]}}}}'
 ----
 copyToClipboard::cb-timeout-oc-undo-patch[]
---
-====
-
 
 endif::workshop[]
 
@@ -369,22 +354,6 @@ endif::workshop[]
 ifdef::workshop[]
 First, introduce some wait time in `recommendation v2` by making it a slow performer with a 3 second delay by running the command
 
-[tabs]
-====
-kubectl::
-+
---
-[#cb-retry-patch]
-[source,bash,subs="+macros,+attributes"]
-----
-kubectl patch deployment -n tutorial{namespace-suffix} recommendation-v2 \
- -p '{"spec":{"template":{"spec":{"containers":[{"name":"recommendation", "image":"quay.io/rhdevelopers/istio-tutorial-recommendation:v2-timeout"}]}}}}'
-----
-copyToClipboard::cb-retry-patch[]
---
-oc::
-+
---
 [#cb-retry-oc-patch]
 [source,bash,subs="+macros,+attributes"]
 ----
@@ -392,8 +361,6 @@ oc patch deployment -n tutorial{namespace-suffix} recommendation-v2 \
  -p '{"spec":{"template":{"spec":{"containers":[{"name":"recommendation", "image":"quay.io/rhdevelopers/istio-tutorial-recommendation:v2-timeout"}]}}}}'
 ----
 copyToClipboard::cb-retry-oc-patch[]
---
-====
 
 endif::workshop[]
 
@@ -442,17 +409,33 @@ But suppose that in a production system this 3s delay was caused by too many con
 :istio-file: destination-rule-recommendation_cb_policy_version_v2.yml
 include::ROOT:partial$command-snippets.adoc[tag=istio-rules]
 
-
-....
-kubectl replace -f link:{github-repo}/{istiofiles-dir}/destination-rule-recommendation_cb_policy_version_v2.yml[istiofiles/destination-rule-recommendation_cb_policy_version_v2.yml] -n tutorial{namespace-suffix}
-....
-
+ifndef::workshop[]
+[tabs]
+====
+kubectl::
++
+--
 [#cb-retry-get-dr]
 [source,bash,subs="+macros,+attributes"]
 ----
-kubectl get destinationrule -n tutorial{namespace-suffix}
+kubectl get -n tutorial{namespace-suffix} destinationrule 
 ----
 copyToClipboard::cb-retry-get-dr[]
+--
+oc::
++
+--
+endif::[]
+[#cb-retry-oc-get-dr]
+[source,bash,subs="+macros,+attributes"]
+----
+oc get -n tutorial{namespace-suffix} destinationrule
+----
+copyToClipboard::cb-retry-oc-get-dr[]
+ifndef::workshop[]
+--
+====
+endif::[]
 
 More information on the fields for the simple circuit-breaker
 https://istio.io/docs/reference/config/istio.routing.v1alpha1.html#CircuitBreaker.SimpleCircuitBreakerPolicy[https://istio.io/docs/reference/config/istio.routing.v1alpha1.html#CircuitBreaker.SimpleCircuitBreakerPolicy]
@@ -476,36 +459,21 @@ You can run siege multiple times, but in all of the executions you should see so
 ==== Clean up
 
 ifdef::workshop[]
+
 Change the implementation of `v2` back to the image that responds without the delay of 3 seconds:
 
-[tabs]
-====
-kubectl::
-+
---
-[#cb-undo-cb-patch]
-[source,bash,subs="+macros,+attributes"]
-----
-kubectl patch deployment recommendation-v2 -p '{"spec":{"template":{"spec":{"containers":[{"name":"recommendation", "image":"quay.io/rhdevelopers/istio-tutorial-recommendation:v2"}]}}}}' -n tutorial{namespace-suffix}
-----
-copyToClipboard::cb-undo-cb-patch[]
---
-oc::
-+
---
 [#cb-undo-oc-cb-patch]
 [source,bash,subs="+macros,+attributes"]
 ----
 oc patch deployment recommendation-v2 -p '{"spec":{"template":{"spec":{"containers":[{"name":"recommendation", "image":"quay.io/rhdevelopers/istio-tutorial-recommendation:v2"}]}}}}' -n tutorial{namespace-suffix}
 ----
 copyToClipboard::cb-undo-oc-cb-patch[]
---
-====
 
 endif::workshop[]
 
 Delete virtual service and circuit breaker policy:
 
+ifndef::workshop[]
 [tabs]
 ====
 kubectl::
@@ -521,24 +489,22 @@ copyToClipboard::cb-all-clean-del-vs[]
 oc::
 +
 --
+endif::[]
 [#cb-all-clean-oc-del-vs]
 [source,bash,subs="+macros,+attributes"]
 ----
 oc delete -n tutorial{namespace-suffix} virtualservice recommendation 
 ----
 copyToClipboard::cb-all-clean-oc-del-vs[]
+ifndef::workshop[]
 --
 ====
+endif::[]
 
 :doc-sec: cb-cleanup
 :k8s-cmd-opt: delete
 :istio-file: destination-rule-recommendation_cb_policy_version_v2.yml
 include::ROOT:partial$command-snippets.adoc[tag=istio-rules]
-
-....
-kubectl delete virtualservice recommendation -n tutorial{namespace-suffix}
-kubectl delete -f istiofiles/destination-rule-recommendation_cb_policy_version_v2.yml -n tutorial{namespace-suffix}
-....
 
 or you can run:
 

@@ -1,5 +1,5 @@
 You should have NO virtualservice nor destinationrule in `tutorial{namespace-suffix}` namespace, check it by running :
-
+ifndef::workshop[]
 [tabs]
 ====
 kubectl::
@@ -16,6 +16,7 @@ copyToClipboard::cb-{doc-sec}-check-rules-exists[]
 oc::
 +
 --
+endif::[]
 [#cb-{doc-sec}-oc-check-rules-exists]
 [source,bash,subs="+macros,+attributes"]
 ----
@@ -23,8 +24,10 @@ oc get virtualservice{namespace-suffix}
 oc get destinationrule{namespace-suffix}
 ----
 copyToClipboard::cb-{doc-sec}-oc-check-rules-exists[]
+ifndef::workshop[]
 --
 ====
+endif::[]
 
 If you find any run the follow script to clean it up:
 
@@ -34,3 +37,4 @@ If you find any run the follow script to clean it up:
 ./scripts/clean.sh tutorial{namespace-suffix}
 ----
 copyToClipboard::cb-{doc-sec}-cleanup[]
+

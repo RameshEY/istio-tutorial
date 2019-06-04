@@ -1,54 +1,60 @@
-[svc-version='']
+=====
 #tag::deploy[]
-include::ROOT:partial$none.adoc[]
 Let's deploy the {svc-name} pod with its sidecar
 
+ifdef::svc-version[]
+ifndef::workshop[]
 [tabs]
 ====
 kubectl::
 +
---
 [#k8s-deploy-{svc-name}]
-
-ifdef::svc-version[]
 [source,bash,subs="attributes+,+macros"]
 ----
 kubectl apply  -n tutorial{namespace-suffix} -f link:{github-repo}/{svc-repo}/kubernetes/Deployment-v2.remote.yml[{svc-repo}/kubernetes/Deployment-v2.remote.yml]
 kubectl create -f link:{github-repo}/{svc-repo}/kubernetes/Service.yml[{svc-repo}/kubernetes/Service.yml] -n tutorial{namespace-suffix}
 ----
 copyToClipboard::k8s-deploy-{svc-name}[]
-endif::[]
-
-ifndef::svc-version[]
-[source,bash,subs="attributes+,+macros"]
-----
-kubectl apply -n tutorial{namespace-suffix} -f link:{github-repo}/{svc-repo}/kubernetes/Deployment.remote.yml[{svc-repo}/kubernetes/Deployment.remote.yml]
-kubectl create -f link:{github-repo}/{svc-repo}/kubernetes/Service.yml[{svc-repo}/kubernetes/Service.yml] -n tutorial{namespace-suffix}
-----
-copyToClipboard::k8s-deploy-{svc-name}[]
-endif::[]
---
 oc::
-+
---
-[#oc-deploy-{svc-name}]
-ifndef::svc-version[]
-[source,bash,subs="attributes+,+macros"]
-----
-oc apply -n tutorial{namespace-suffix} -f link:{github-repo}/{svc-repo}/kubernetes/Deployment.remote.yml[{svc-repo}/kubernetes/Deployment.remote.yml]
-oc create -f link:{github-repo}/{svc-repo}/kubernetes/Service.yml[{svc-repo}/kubernetes/Service.yml] -n tutorial{namespace-suffix}
-----
-copyToClipboard::oc-deploy-{svc-name}[]
+++
 endif::[]
-
-ifdef::svc-version[]
+[#oc-deploy-{svc-name}]
 [source,bash,subs="attributes+,+macros"]
 ----
 oc apply -n tutorial{namespace-suffix} -f link:{github-repo}/{svc-repo}/kubernetes/Deployment-v2.remote.yml[{svc-repo}/kubernetes/Deployment-v2.remote.yml]
 oc create -f link:{github-repo}/{svc-repo}/kubernetes/Service.yml[{svc-repo}/kubernetes/Service.yml] -n tutorial{namespace-suffix}
 ----
 copyToClipboard::oc-deploy-{svc-name}[]
-endif::[]
---
+ifndef::workshop[]
 ====
+endif::[]
+endif::[]
+
+ifndef::svc-version[]
+ifndef::workshop[]
+[tabs]
+====
+kubectl::
++
+[source,bash,subs="attributes+,+macros"]
+----
+kubectl apply -n tutorial{namespace-suffix} -f link:{github-repo}/{svc-repo}/kubernetes/Deployment.remote.yml[{svc-repo}/kubernetes/Deployment.remote.yml]
+kubectl create -f link:{github-repo}/{svc-repo}/kubernetes/Service.yml[{svc-repo}/kubernetes/Service.yml] -n tutorial{namespace-suffix}
+----
+copyToClipboard::k8s-deploy-{svc-name}[]
+oc::
++
+endif::[]
+[#oc-deploy-{svc-name}]
+[source,bash,subs="attributes+,+macros"]
+----
+oc apply -n tutorial{namespace-suffix} -f link:{github-repo}/{svc-repo}/kubernetes/Deployment.remote.yml[{svc-repo}/kubernetes/Deployment.remote.yml]
+oc create -f link:{github-repo}/{svc-repo}/kubernetes/Service.yml[{svc-repo}/kubernetes/Service.yml] -n tutorial{namespace-suffix}
+----
+copyToClipboard::oc-deploy-{svc-name}[]
+ifndef::workshop[]
+====
+endif::[]
+endif::[]
 #end::deploy[]
+=====

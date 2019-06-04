@@ -16,7 +16,6 @@ oc login -u user$WORKSHOP_USER  -p  openshift \
 ----
 copyToClipboard::workshop-set-env[]
 
-
 [#deploycustomer]
 == Deploy customer
 
@@ -109,6 +108,7 @@ copyToClipboard::workshop-download-sources[]
 
 Start deploying the microservice projects, starting with customer
 
+ifndef::workshop[]
 Make sure `istioctl` is in your `PATH` and it is of version `1.1.7`
 
 [#workshop-check-istioctl]
@@ -117,6 +117,7 @@ Make sure `istioctl` is in your `PATH` and it is of version `1.1.7`
 $ istioctl version
 ----
 copyToClipboard::workshop-check-istioctl[]
+endif::[]
 
 === Deploy Customer deploy using existing images
 
@@ -128,6 +129,7 @@ include::ROOT:partial$deploy-microservice.adoc[tag=deploy]
 
 Since the `customer` service is the one our users will interact with, let's add an OpenShift Route that exposes that endpoint.
 
+ifndef::workshop[]
 [tabs]
 ====
 kubectl::
@@ -144,6 +146,7 @@ copyToClipboard::deploy-ms-customer[]
 oc::
 +
 --
+endif::[]
 [#deploy-ms-oc-customer]
 [source,bash,subs="+macros,+attributes"]
 ----
@@ -152,8 +155,10 @@ oc get route -n tutorial{namespace-suffix} && \
 oc get pods -w -n tutorial{namespace-suffix}
 ----
 copyToClipboard::deploy-ms-oc-customer[]
+ifndef::workshop[]
 --
 ====
+endif::[]
 
 ifndef::workshop[]
 IMPORTANT: If your pod fails with `ImagePullBackOff`, it's possible that your current terminal isn't using the proper Docker Environment. See link:#setup-environment[Setup environment].
@@ -208,6 +213,9 @@ customer => Error: 503 - preference => UnknownHostException: recommendation
 include::ROOT:partial$deploy-microservice.adoc[tag=deploy]
 
 === Wait recommendation to be deployed
+
+:doc-sec: recommendation
+include::ROOT:partial$command-snippets.adoc[tag=kgpow]
 
 :doc-sec: recommendation
 include::ROOT:partial$command-snippets.adoc[tag=call-customer-svc]

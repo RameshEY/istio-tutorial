@@ -1,5 +1,6 @@
+=====
 #tag::kgpow[]
-include::ROOT:partial$none.adoc[]
+ifndef::workshop[]
 [tabs]
 ====
 kubectl::
@@ -7,14 +8,14 @@ kubectl::
 --
 ifdef::k8s-labels[]
 [#cmd-kgpow-{doc-sec}]
-[source,bash,subs="+macros,+attributes"]
+[source,bash,subs="attributes+,+macros"]
 ----
 kubectl -n tutorial{namespace-suffix} get pods -l {k8s-labels} -w
 ----
 endif::[]
 ifndef::k8s-labels[]
 [#cmd-kgpow-{doc-sec}]
-[source, bash,subs="+macros,+attributes"]
+[source, bash,subs="attributes+,+macros"]
 ----
 kubectl -n tutorial{namespace-suffix} get pods -w
 ----
@@ -24,23 +25,27 @@ copyToClipboard::cmd-kgpow-{doc-sec}[]
 oc::
 +
 --
+endif::[]
 ifdef::k8s-labels[]
 [#cmd-kgpow-{doc-sec}-oc]
-[source, bash,subs="+macros,+attributes"]
+[source, bash,subs="attributes+,+macros"]
 ----
 oc -n tutorial{namespace-suffix} get pods -l {k8s-labels} -w
 ----
 endif::[]
 ifndef::k8s-labels[]
 [#cmd-kgpow-{doc-sec}-oc]
-[source, bash,subs="+macros,+attributes"]
+[source, bash,subs="attributes+,+macros"]
 ----
 oc -n tutorial{namespace-suffix} get pods -w
 ----
 endif::[]
 copyToClipboard::cmd-kgpow-{doc-sec}-oc[]
+ifndef::workshop[]
 --
 ====
+endif::[]
+
 #end::kgpow[]
 
 #tag::call-customer-svc[]
@@ -48,7 +53,7 @@ include::ROOT:partial$none.adoc[]
 Wait until the status is `Running` and there are `2/2` pods in the `Ready` column. To exit, press kbd:[Ctrl+C]
 
 [#invoke{doc-sec}-customer-endpoint]
-[source,bash,subs="+macros,+attributes"]
+[source,bash,subs="attributes+,+macros"]
 ----
 curl http://customer-tutorial{namespace-suffix}.{appdomain}
 ----
@@ -57,7 +62,7 @@ copyToClipboard::invoke{doc-sec}-customer-endpoint[]
 #end::call-customer-svc[]
 
 #tag::istio-rules[]
-include::ROOT:partial$none.adoc[]
+ifndef::workshop[]
 [tabs]
 =====
 kubectl::
@@ -71,25 +76,28 @@ copyToClipboard::istio-rules-{doc-sec}-{istio-file}[]
 oc::
 +
 --
+endif::[]
 [#istio-rules-oc-{doc-sec}-{istio-file}]
 [source,bash,subs="attributes+,+macros"]
 ----
 oc -n tutorial{namespace-suffix} {k8s-cmd-opt} -f link:{github-repo}/{istiofiles-dir}/{istio-file}[istiofiles/{istio-file}]
 ----
 copyToClipboard::istio-rules-oc-{doc-sec}-{istio-file}[]
+ifndef::workshop[]
 --
 =====
+endif::[]
 #end::istio-rules[]
 
 #tag::pod-ssh-exec[]
-include::ROOT:partial$none.adoc[]
+ifndef::workshop[]
 [tabs]
 ====
 kubectl::
 +
 --
 [#cb-{doc-sec}-{deployment}-trigger-misbehave]
-[source,bash,subs="+macros,+attributes"]
+[source,bash,subs="attributes+,+macros"]
 ----
 kubectl exec -it -n tutorial{namespace-suffix} \
   $(kubectl get pods -n tutorial{namespace-suffix} \
@@ -100,37 +108,44 @@ copyToClipboard::cb-{doc-sec}-{deployment}-trigger-misbehave[]
 oc::
 +
 --
+endif::[]
 [#cb-oc-{doc-sec}-{deployment}-trigger-misbehave]
-[source,bash,subs="+macros,+attributes"]
+[source,bash,subs="attributes+,+macros"]
 ----
 oc exec -it -n tutorial{namespace-suffix} \
  $(oc get pods -n tutorial{namespace-suffix} \
  |grep {deployment}|awk '{ print $1 }'|head -1) -c recommendation /bin/bash
 ----
 copyToClipboard::cb-oc-{doc-sec}-{deployment}-trigger-misbehave[]
+ifndef::workshop[]
 --
 ====
+endif::[]
 #end::pod-ssh-exec[]
 
 #tag::scale-deployment[]
-include::ROOT:partial$none.adoc[]
+ifndef::workshop[]
 [tabs]
 ====
 kubectl::
 +
 [#scale-{doc-sec}-{deployment}]
-[source,bash,subs="+macros,+attributes"]
+[source,bash,subs="attributes+,+macros"]
 ----
 kubectl scale deployment {deployment} --replicas={replicas} -n tutorial{namespace-suffix}
 ----
 copyToClipboard::scale-{doc-sec}-{deployment}[]
 oc::
 +
+endif::[]
 [#oc-scale-{doc-sec}-{deployment}]
-[source,bash,subs="+macros,+attributes"]
+[source,bash,subs="attributes+,+macros"]
 ----
 oc scale deployment {deployment} --replicas={replicas} -n tutorial{namespace-suffix}
 ----
 copyToClipboard::oc-scale-{doc-sec}-{deployment}[]
+ifndef::workshop[]
 ====
+endif::[]
 #end::scale-deployment[]
+=====

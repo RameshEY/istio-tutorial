@@ -45,6 +45,7 @@ include::ROOT:partial$command-snippets.adoc[tag=istio-rules]
 :istio-file: virtual-service-safari-recommendation-v2.yml
 include::ROOT:partial$command-snippets.adoc[tag=istio-rules]
 
+ifndef::workshop[]
 [tabs]
 ====
 kubectl::
@@ -57,13 +58,16 @@ kubectl get virtualservice -n tutorial{namespace-suffix}
 copyToClipboard::advrr-get-vs[]
 oc::
 +
+endif::[]
 [#advrr-oc-get-vs]
 [source,bash,subs="+macros,+attributes"]
 ----
 oc get virtualservice -n tutorial{namespace-suffix}
 ----
 copyToClipboard::advrr-oc-get-vs[]
+ifndef::workshop[]
 ====
+endif::[]
 
 and test with a Safari (or even Chrome on Mac since it includes Safari in the string). Safari only sees v2 responses from recommendation
 
@@ -91,6 +95,7 @@ copyToClipboard::advrr-curl-to-v1[]
 
 You can describe the virtualservice to see its configuration
 
+ifndef::workshop[]
 [tabs]
 ====
 kubectl::
@@ -103,13 +108,16 @@ kubectl get virtualservice -o yaml -n tutorial{namespace-suffix}
 copyToClipboard::advrr-desc-vs[]
 oc::
 +
+endif::[]
 [#advrr-oc-desc-vs]
 [source,bash,subs="+macros,+attributes"]
 ----
 oc get virtualservice -o yaml -n tutorial{namespace-suffix}
 ----
 copyToClipboard::advrr-oc-desc-vs[]
+ifndef::workshop[]
 ====
+endif::[]
 
 ==== Remove the Safari rule
 
@@ -195,6 +203,7 @@ curl customer-tutorial{namespace-suffix}.{appdomain}
 copyToClipboard::advmir-curl[]
 
 Check the logs of recommendation-v2
+ifndef::workshop[]
 [tabs]
 ====
 kubectl::
@@ -207,16 +216,18 @@ kubectl logs -n tutorial{namespace-suffix} -f \
 ----
 oc::
 +
+endif::[]
 [source,bash,subs="+macros,+attributes"]
 ----
 oc logs -n tutorial{namespace-suffix} -f \
 `oc get pods -n tutorial{namespace-suffix}|grep recommendation-v2|awk '{ print $1 }'` \
 -c recommendation
 ----
+ifndef::workshop[]
 ====
+endif::[]
 
 === Clean up
-
 
 Delete Destination Rule:
 
