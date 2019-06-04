@@ -1,7 +1,6 @@
 = Deploy Microservices
 include::ROOT:page$_attributes.adoc[]
 
-
 Create an environment variable for your user and log into OpenShift.
 
 Set the workshop user e.g  `export WORKSHOP_USER=<your-username-number>`
@@ -21,11 +20,6 @@ copyToClipboard::workshop-set-env[]
 
 Make sure you are logged in
 
-[tabs]
-====
-oc::
-+
---
 [#workshop-ocp-login]
 [source,bash,subs="+macros,+attributes"]
 ----
@@ -33,17 +27,6 @@ oc whoami
 ----
 copyToClipboard::workshop-ocp-login[]
 
-ifndef::workshop[]
-Create workshop project 
-[#workshop-set-project]
-[source,bash,subs="+macros,+attributes"]
-----
-oc new-project tutorial{namespace-suffix}
-----
-copyToClipboard::workshop-set-project[]
-endif::[]
-
-ifdef::workshop[]
 Go to workshop project 
 [#workshop-set-project]
 [source,bash,subs="+macros,+attributes"]
@@ -51,50 +34,6 @@ Go to workshop project
 oc project tutorial{namespace-suffix}
 ----
 copyToClipboard::workshop-set-project[]
-endif::[]
-
-ifndef::workshop[]
-[#workshop-set-scc]
-[source,bash,subs="+macros,+attributes"]
-----
-oc adm policy add-scc-to-user privileged -z default -n tutorial{namespace-suffix}
-----
-copyToClipboard::workshop-set-scc[]
-endif::workshop[]
---
-kubectl::
-+
---
-[#workshop-kubectl-login]
-[source,bash,subs="+macros,+attributes"]
-----
-kubectl config current-context
-----
-copyToClipboard::workshop-kubectl-login[]
-
-Create workshop namespace
-
-[#workshop-set-ns]
-[source,bash,subs="+macros,+attributes"]
-----
-kubectl create namespace tutorial{namespace-suffix} && \
-kubectl config set-context $(kubectl config current-context) \
-  --namespace=tutorial{namespace-suffix}
-----
-copyToClipboard::workshop-set-ns[]
-[TIP]
-=====
-If you have installed https://github.com/ahmetb/kubectx[kubens], then you can change the namespace like:
-[#workshop-set-kubens]
-[source,bash,subs="+macros,+attributes"]
-----
-kubectl create namespace tutorial{namespace-suffix} && \
-kubens tutorial{namespace-suffix} 
-----
-copyToClipboard::workshop-set-kubens[]
-=====
---
-====
 
 Download the tutorial sources
 
