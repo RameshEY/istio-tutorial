@@ -193,14 +193,14 @@ endif::[]
 [#srr-oc-get-vsvc]
 [source,bash,subs="attributes+,+macros"]
 ----
-kubectl -n tutorial{namespace-suffix} get virtualservice 
+oc -n tutorial{namespace-suffix} get virtualservice 
 ----
 copyToClipboard::srr-oc-get-vsvc[]
 
 [#srr-oc-get-vsvc-yaml]
 [source,bash,subs="attributes+,+macros"]
 ----
-kubectl -n tutorial{namespace-suffix} get virtualservice -o yaml 
+oc -n tutorial{namespace-suffix} get virtualservice -o yaml 
 ----
 copyToClipboard::srr-oc-get-vsvc-yaml[]
 ifndef::workshop[]
