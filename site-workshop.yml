@@ -13,9 +13,10 @@ content:
 asciidoc:
   attributes:
     workshop: true
-    ocpurl: https://master.jconf-d4f8.openshiftworkshop.com
-    appdomain: apps.jconf-d4f8.openshiftworkshop.com
-    etherpad: https://etherpad.wikimedia.org/p/istio-jconf
+    ocpurl: https://api.demo5.workspace7.org:6443
+    appdomain: apps.demo5.workspace7.org
+    istioIngressUrl: https://istio-ingressgateway-istio-system.demo5.workspace7.org
+    etherpad: https://etherpad.wikimedia.org/p/istio-sg-0927
     namespace-suffix: -$WORKSHOP_USER
     path: customer$WORKSHOP_USER
 ui:

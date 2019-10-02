@@ -18,9 +18,9 @@ Run the following command to produce load.
 [source,bash,subs="+macros,+attributes"]
 ----
 ifdef::workshop[]
-open http://grafana-istio-system.{appdomain}/d/TSEY6jLmk/istio-galley-dashboard?orgId=1
+open https://grafana-istio-system.{appdomain}/d/TSEY6jLmk/istio-galley-dashboard?orgId=1
 or
-firefox http://grafana-istio-system.{appdomain}/d/TSEY6jLmk/istio-galley-dashboard?orgId=1
+firefox https://grafana-istio-system.{appdomain}/d/TSEY6jLmk/istio-galley-dashboard?orgId=1
 endif::workshop[]
 
 ifndef::workshop[]
@@ -35,7 +35,7 @@ image:grafana1.png[Grafana 1]
 [source,bash,subs="+macros,+attributes"]
 ----
 ifdef::workshop[]
-http://grafana-istio-system.{appdomain}/d/UbsSZTDik/istio-workload-dashboard?refresh=5s&orgId=1"
+https://grafana-istio-system.{appdomain}/d/UbsSZTDik/istio-workload-dashboard?refresh=5s&orgId=1"
 endif::workshop[]
 
 ifndef::workshop[]
@@ -57,9 +57,9 @@ Explore Prometheus:
 [source,bash,subs="+macros,+attributes"]
 ----
 ifdef::workshop[]
-open http://prometheus-istio-system.{appdomain}/graph?g0.range_input=1m&g0.stacked=1&g0.expr=&g0.tab=0"
+open https://prometheus-istio-system.{appdomain}/graph?g0.range_input=1m&g0.stacked=1&g0.expr=&g0.tab=0"
 or
-firefox http://prometheus-istio-system.{appdomain}/graph?g0.range_input=1m&g0.stacked=1&g0.expr=&g0.tab=0"
+firefox https://prometheus-istio-system.{appdomain}/graph?g0.range_input=1m&g0.stacked=1&g0.expr=&g0.tab=0"
 endif::workshop[]
 
 ifndef::workshop[]
@@ -139,9 +139,9 @@ Let's open the Jaeger console, select `customer` from the list of services and c
 [source,bash,subs="+macros,+attributes"]
 ----
 ifdef::workshop[]
-open https://jaeger-query-istio-system.{appdomain}/
+open https://jaeger-istio-system.{appdomain}/
 or
-firefox https://jaeger-query-istio-system.{appdomain}/
+firefox https://jaeger-istio-system.{appdomain}/
 endif::workshop[]
 
 ifndef::workshop[]

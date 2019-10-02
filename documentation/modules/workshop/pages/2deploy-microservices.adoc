@@ -11,7 +11,9 @@ export WORKSHOP_USER=<your-username-number>
 
 #Example:
 export WORKSHOP_USER=1
-
+# set the KUBECONFIG config file to a writable destination 
+export KUBECONFIG=`pwd`/.kube/config
+# login to OpenShift
 oc login -u user$WORKSHOP_USER -p openshift {ocpurl}
 ----
 
@@ -24,41 +26,16 @@ Make sure you are logged in
 [source,bash,subs="+macros,+attributes"]
 ----
 oc whoami
-or
-kubectl config current-context
 ----
 
-and you have setup the project/namespace
+and navigate to the project
 
 [source,bash,subs="+macros,+attributes"]
 ----
-oc new-project tutorial{namespace-suffix}
-or
-kubectl create namespace tutorial{namespace-suffix}
-kubectl config set-context $(kubectl config current-context) --namespace=tutorial{namespace-suffix}
-
-ifndef::workshop[]
-oc adm policy add-scc-to-user privileged -z default -n tutorial
-endif::workshop[]
-----
-
-Then clone the git repository
-
-[source,bash,subs="+macros,+attributes"]
-----
-git clone https://github.com/redhat-developer-demos/istio-tutorial
-cd istio-tutorial
+oc project tutorial{namespace-suffix}
 ----
 
 Start deploying the microservice projects, starting with customer
-
-Make sure `istioctl` is in your `PATH`:
-
-[source,bash,subs="+macros,+attributes"]
-----
-$ istioctl version
-version.BuildInfo{Version:"1.1.7", GitRevision:"eec7a74473deee98cad0a996f41a32a47dd453c2", User:"root", Host:"341b3bf0-76ac-11e9-b644-0a580a2c0404", GolangVersion:"go1.10.4", DockerHub:"docker.io/istio", BuildStatus:"Clean", GitTag:"1.1.6-6-geec7a74"}
-----
 
 === Deploy Customer deploy using existing images
 
@@ -66,13 +43,8 @@ Let's deploy the customer pod with its sidecar
 
 [source,bash,subs="+macros,+attributes"]
 ----
-oc apply -f <(istioctl kube-inject -f link:{github-repo}/{customer-repo}/kubernetes/Deployment.remote.yml[{customer-repo}/kubernetes/Deployment.remote.yml]) -n tutorial{namespace-suffix}
+oc apply -f link:{github-repo}/{customer-repo}/kubernetes/Deployment.yml[{customer-repo}/kubernetes/Deployment.yml] -n tutorial{namespace-suffix}
 oc create -f link:{github-repo}/{customer-repo}/kubernetes/Service.yml[{customer-repo}/kubernetes/Service.yml] -n tutorial{namespace-suffix}
-
-or
-
-kubectl apply -f <(istioctl kube-inject -f link:{github-repo}/{customer-repo}/kubernetes/Deployment.remote.yml[{customer-repo}/kubernetes/Deployment.remote.yml]) -n tutorial{namespace-suffix}
-kubectl create -f link:{github-repo}/{customer-repo}/kubernetes/Service.yml[{customer-repo}/kubernetes/Service.yml] -n tutorial{namespace-suffix}
 ----
 
 === Expose customer

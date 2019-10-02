@@ -1,6 +1,6 @@
 * xref:index.adoc[Introduction to Istio Tutorial]
 
-ifdef::workshop[]
+ifndef::workshop[]
 * xref:workshop:1setup.adoc[1. Setup]
 endif::workshop[]
 
@@ -16,8 +16,9 @@ endif::workshop[]
 ** xref:2deploy-microservices.adoc#deploycustomer[Deploy Customer]
 ** xref:2deploy-microservices.adoc#deploypreference[Deploy Preference]
 ** xref:2deploy-microservices.adoc#deployrecommendation[Deploy Recommendation]
+ifndef::workshop[]
 ** xref:2deploy-microservices.adoc#redeployingcode[Updating Redeploying Code]
-
+endif::workshop[]
 
 * xref:3monitoring-tracing.adoc[3. Observability]
 ** xref:3monitoring-tracing.adoc#monitoring[Monitoring with Grafana]
@@ -55,6 +56,7 @@ endif::workshop[]
 *** xref:4advanced-routerules.adoc#mirroringtraffic[Mirroring Traffic]
 *** xref:4advanced-routerules.adoc#loadbalancer[Load Balancer]
 
+ifndef::workshop[]
 * xref:5circuit-breaker.adoc[5. Service Resiliency]
 ** xref:5circuit-breaker.adoc#retry[Retry]
 ** xref:5circuit-breaker.adoc#timeout[Timeout]
@@ -66,7 +68,6 @@ endif::workshop[]
 ** xref:6fault-injection.adoc#503error[HTTP 503 Error]
 ** xref:6fault-injection.adoc#delay[Delay]
 
-ifndef::workshop[]
 * xref:7policy.adoc[7. Policy]
 ** xref:7policy.adoc#ratelimiting[Rate Limiting - Not working yet]
 

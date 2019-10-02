@@ -23,8 +23,6 @@ By default, recommendation v1 and v2 are being randomly load-balanced as that is
 [source,bash,subs="+macros,+attributes"]
 ----
 $ oc get pods -l app=recommendation -n tutorial{namespace-suffix}
-or
-$ kubectl get pods -l app=recommendation -n tutorial{namespace-suffix}
 
 NAME                                  READY     STATUS    RESTARTS   AGE
 recommendation-v1-3719512284-7mlzw   2/2       Running   6          18h
@@ -35,9 +33,12 @@ You can inject 503's, for approximately 50% of the requests
 
 [source,bash,subs="+macros,+attributes"]
 ----
-kubectl create -f link:{github-repo}/{istiofiles-dir}/destination-rule-recommendation.yml[istiofiles/destination-rule-recommendation.yml] -n tutorial{namespace-suffix}
-kubectl create -f link:{github-repo}/{istiofiles-dir}/virtual-service-recommendation-503.yml[istiofiles/virtual-service-recommendation-503.yml] -n tutorial{namespace-suffix}
+oc create -f link:{github-repo}/{istiofiles-dir}/destination-rule-recommendation.yml[istiofiles/destination-rule-recommendation.yml] -n tutorial{namespace-suffix}
+oc create -f link:{github-repo}/{istiofiles-dir}/virtual-service-recommendation-503.yml[istiofiles/virtual-service-recommendation-503.yml] -n tutorial{namespace-suffix}
+----
 
+[source,bash,subs="+macros,+attributes"]
+----
 ./scripts/run.sh http://istio-ingressgateway-istio-system.{appdomain}/{path}
 
 customer => preference => recommendation v2 from '7778d6fb89-j6lts': 138
@@ -57,7 +58,7 @@ Clean up
 
 [source,bash,subs="+macros,+attributes"]
 ----
-kubectl delete -f istiofiles/virtual-service-recommendation-503.yml -n tutorial{namespace-suffix}
+oc delete -f istiofiles/virtual-service-recommendation-503.yml -n tutorial{namespace-suffix}
 ----
 
 [#delay]
@@ -67,8 +68,8 @@ The most insidious of possible distributed computing faults is not a "down" serv
 
 [source,bash,subs="+macros,+attributes"]
 ----
-kubectl create -f link:{github-repo}/{istiofiles-dir}/virtual-service-recommendation-delay.yml[istiofiles/virtual-service-recommendation-delay.yml] -n tutorial{namespace-suffix}
-kubectl replace -f link:{github-repo}/{istiofiles-dir}/destination-rule-recommendation.yml[istiofiles/destination-rule-recommendation.yml] -n tutorial{namespace-suffix}
+oc create -f link:{github-repo}/{istiofiles-dir}/virtual-service-recommendation-delay.yml[istiofiles/virtual-service-recommendation-delay.yml] -n tutorial{namespace-suffix}
+oc replace -f link:{github-repo}/{istiofiles-dir}/destination-rule-recommendation.yml[istiofiles/destination-rule-recommendation.yml] -n tutorial{namespace-suffix}
 ----
 
 And hit the customer endpoint
@@ -86,15 +87,10 @@ If you are monitoring the logs for recommendation v1 and v2, you will also see t
 stern recommendation -n tutorial{namespace-suffix}
 ----
 
-or
-`bash
-./kubetail.sh recommendation -n tutorial{namespace-suffix}
-`
-
 === Clean up
 
 [source,bash,subs="+macros,+attributes"]
 ----
-kubectl delete -f istiofiles/destination-rule-recommendation.yml -n tutorial{namespace-suffix}
-kubectl delete -f istiofiles/virtual-service-recommendation-delay.yml -n tutorial{namespace-suffix}
+oc delete -f istiofiles/destination-rule-recommendation.yml -n tutorial{namespace-suffix}
+oc delete -f istiofiles/virtual-service-recommendation-delay.yml -n tutorial{namespace-suffix}
 ----
